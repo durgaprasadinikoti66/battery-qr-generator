@@ -1,8 +1,8 @@
 'use client'
-export const dynamic = "force-dynamic";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation"
 
-export default function BatteryQRView() {
+function BatteryQRViewInner() {
   const searchParams = useSearchParams()
   const dataParam = searchParams.get("data")
   let batteryData = null
@@ -39,5 +39,13 @@ export default function BatteryQRView() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function BatteryQRView() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BatteryQRViewInner />
+    </Suspense>
   )
 }
