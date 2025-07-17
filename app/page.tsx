@@ -46,10 +46,10 @@ export default function QRBatteryGenerator() {
     manufacturingMonth: "",
     ocv: "",
     ir: "",
-    website: "",
-    brochure: "",
-    userManual: "",
-    warrantyDocument: "",
+    website: "https://www.fireflyenergy.com/",
+    brochure: "https://www.fireflyenergy.com/assets/img/pdf/OASIS-MCF-G31-Brochure.pdf",
+    userManual: "https://www.fireflyenergy.com/assets/img/pdf/user-manual-g31m-2025.pdf",
+    warrantyDocument: "https://www.fireflyenergy.com/assets/img/pdf/limited-warranty-document-ff-usa-2025.pdf",
   })
 
   const [selectedMonth, setSelectedMonth] = useState("")
@@ -96,8 +96,10 @@ export default function QRBatteryGenerator() {
     }
 
     try {
-      const qrString = JSON.stringify(qrData, null, 2)
-      const qrCodeDataUrl = await QRCode.toDataURL(qrString, {
+      // Encode the data as a URL to the /view page with data as a query param
+      const dataParam = encodeURIComponent(JSON.stringify(qrData))
+      const viewUrl = `${window.location.origin}/view?data=${dataParam}`
+      const qrCodeDataUrl = await QRCode.toDataURL(viewUrl, {
         width: 300,
         margin: 2,
         color: {
@@ -251,7 +253,7 @@ export default function QRBatteryGenerator() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="ocv" className="flex items-center gap-1">
-                    OCV (Volts) <span className="text-red-500">*</span>
+                   Open Current Volage (OCV in Volts) <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="ocv"
@@ -264,7 +266,7 @@ export default function QRBatteryGenerator() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="ir" className="flex items-center gap-1">
-                    IR (Amps) <span className="text-red-500">*</span>
+                    Internal Resistance (IR in Amps) <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="ir"
