@@ -210,7 +210,7 @@ export default function QRBatteryGenerator() {
                 </Label>
                 <Input
                   id="batterySrNo"
-                  type="number"
+                  type="text"
                   placeholder="Enter battery serial number"
                   value={formData.batterySrNo}
                   onChange={(e) => handleInputChange("batterySrNo", e.target.value)}
