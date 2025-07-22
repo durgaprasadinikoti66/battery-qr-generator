@@ -2,6 +2,16 @@
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation"
 
+function formatKey(key: string) {
+  // Replace underscores and camelCase with spaces, capitalize first letter, and remove extra spaces
+  return key
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/_/g, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/^./, (str) => str.toUpperCase())
+    .trim();
+}
+
 function BatteryQRViewInner() {
   const searchParams = useSearchParams()
   const dataParam = searchParams.get("data")
@@ -21,17 +31,17 @@ function BatteryQRViewInner() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#f8fafc", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <div style={{ background: "#fff", borderRadius: 12, boxShadow: "0 2px 16px #0001", padding: 32, minWidth: 320 }}>
-        <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 16 }}>Battery Information</h2>
+      <div style={{ background: "#fff", borderRadius: 20, boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.2)", padding: 40, minWidth: 350, maxWidth: 420, width: '100%' }}>
+        <h2 style={{ fontSize: 28, fontWeight: 700, marginBottom: 24, textAlign: 'center', color: '#2d3748', letterSpacing: 1 }}>Battery Information</h2>
         {error ? (
-          <div style={{ color: "#e53e3e", fontWeight: 500 }}>{error}</div>
+          <div style={{ color: "#e53e3e", fontWeight: 500, textAlign: 'center' }}>{error}</div>
         ) : (
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0, background: '#f9fafb', borderRadius: 12, overflow: 'hidden', boxShadow: '0 2px 8px #0001' }}>
             <tbody>
               {Object.entries(batteryData).map(([key, value]) => (
                 <tr key={key}>
-                  <td style={{ fontWeight: 600, padding: "8px 12px", borderBottom: "1px solid #eee", textTransform: "capitalize" }}>{key.replace(/([A-Z])/g, ' $1')}</td>
-                  <td style={{ padding: "8px 12px", borderBottom: "1px solid #eee" }}>{String(value)}</td>
+                  <td style={{ fontWeight: 600, padding: "12px 16px", borderBottom: "1px solid #e2e8f0", whiteSpace: 'nowrap', color: '#374151', background: '#f3f4f6', fontSize: 15 }}>{formatKey(key)}</td>
+                  <td style={{ padding: "12px 16px", borderBottom: "1px solid #e2e8f0", color: '#2d3748', fontSize: 15 }}>{String(value)}</td>
                 </tr>
               ))}
             </tbody>

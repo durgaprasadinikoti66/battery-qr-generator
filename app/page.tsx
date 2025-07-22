@@ -119,13 +119,13 @@ export default function QRBatteryGenerator() {
     const manufacturingMonth = `${selectedMonth}-${selectedYear}`;
     const qrData = {
       batterySrNo: formData.batterySrNo,
-      website: formData.website,
-      "Technical brochure": formData.brochure,
-      userManual: formData.userManual,
-      warrantyDocument: formData.warrantyDocument,
       "Manufacturing Month & Year": manufacturingMonth,
       "Open Current Voltage (OCV)": `${formData.ocv} V`,
       "Internal Resistance (IR)": `${formData.ir} A`,
+      warrantyDocument: formData.warrantyDocument,
+      userManual: formData.userManual,
+      "Technical brochure": formData.brochure,
+      website: formData.website,
     };
 
     try {
@@ -445,8 +445,8 @@ export default function QRBatteryGenerator() {
                         <strong>Battery SR NO:</strong> {formData.batterySrNo}
                       </p>
                       <p>
-                        <strong>Manufacturing Month & Year:</strong> {selectedMonth}-
-                        {selectedYear}
+                        <strong>Manufacturing Month & Year:</strong>{" "}
+                        {selectedMonth}-{selectedYear}
                       </p>
                       <p>
                         <strong>Open Current Voltage (OCV):</strong>{" "}
