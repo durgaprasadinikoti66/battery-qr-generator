@@ -36,10 +36,7 @@ function BatteryQRViewInner() {
     error = "No data found in QR code."
   }
 
-  // For OCV and IR, render in one row with no gap
   const entries = batteryData ? Object.entries(batteryData) : [];
-  const ocvIndex = entries.findIndex(([key]) => key.toLowerCase().includes('ocv'));
-  const irIndex = entries.findIndex(([key]) => key.toLowerCase().includes('ir'));
 
   return (
     <div style={{ minHeight: "100vh", background: "#f8fafc", display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -50,24 +47,7 @@ function BatteryQRViewInner() {
         ) : (
           <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0, background: '#f9fafb', borderRadius: 12, overflow: 'hidden', boxShadow: '0 2px 8px #0001' }}>
             <tbody>
-              {entries.map(([key, value], idx) => {
-                // OCV and IR in one row, no gap
-                if (idx === ocvIndex && irIndex !== -1 && irIndex === idx + 1) {
-                  return (
-                    <tr key="ocv-ir">
-                      <td style={{ fontWeight: 600, padding: "12px 16px", borderBottom: "1px solid #e2e8f0", whiteSpace: 'nowrap', color: '#374151', background: '#f3f4f6', fontSize: 15 }}>
-                        Open Current Volage (OCV) / Internal Resistance (IR)
-                      </td>
-                      <td style={{ padding: "12px 16px", borderBottom: "1px solid #e2e8f0", color: '#2d3748', fontSize: 15 }}>
-                        {String(entries[ocvIndex][1])} / {String(entries[irIndex][1])}
-                      </td>
-                    </tr>
-                  );
-                }
-                // Skip IR row if already rendered with OCV
-                if (idx === irIndex && ocvIndex !== -1 && ocvIndex < irIndex) {
-                  return null;
-                }
+              {entries.map(([key, value]) => {
                 // For URLs, wrap in anchor, download if PDF
                 if (isUrl(String(value))) {
                   return (
